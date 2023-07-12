@@ -29,17 +29,25 @@
             <th>Category</th>
             <th>Comment</th>
             <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <tr>
+            <th colspan="6" ><label for="Search" >Search Name :</label>
+                <input id="Search" width="100%" type="search">
+                <input type="submit">
+            </th>
         </tr>
         </thead>
-        <c:forEach var="b" items="${list}">
+        <c:forEach var="b" items="${list}"
+        >
             <tr>
-                <td>${b.getId()}</td>
+                <td><a href="/blog/detail/${b.getId()}">${b.getId()}</a></td>
                 <td>${b.getName()}</td>
                 <td>${b.getCategory()}</td>
                 <td>${b.getTopic()}</td>
                 <th>${b.getIdListComment()}</th>
-                <th><a href="/edit?id=${b.getId()}" type="button" class="btn btn-info" >Edit</a></th>
-                <th><a href="/delete?id=${b.getId()}" type="button" class="btn btn-info" >Del</a></th>
+                <th><a href="/blog/edit/${b.getId()}" type="button" class="btn btn-info">Edit</a></th>
+                <th><a href="/blog/delete?id=${b.getId()}" type="button" class="btn btn-info">Del</a></th>
             </tr>
         </c:forEach>
     </table>

@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Edit</title>
@@ -28,11 +29,14 @@
         <th>Edit</th>
     </tr>
     <tr>
-        <td><input value="${Blog.getid}" type="hidden">${Blog.getid}</td>
-        <td><input value="${Blog.getname}"></td>
-        <td><input value="${Blog.getcategory}"></td>
-        <td><input value="${Blog.gettopic}"></td>
-        <th><input value="${Blog.getidListComment}"></th>
+        <form action="/blog/edit" method="post">
+        <td><input value="${Blog.id}" type="hidden">${Blog.id}</td>
+        <td><input value="${Blog.name}"></td>
+        <td><input value="${Blog.category}"></td>
+        <td><input value="${Blog.topic}"></td>
+        <th><input value="${Blog.idListComment}"></th>
+        <th><button type="submit">Done</button></th>
+        </form>
     </tr>
 </table>
 </body>
