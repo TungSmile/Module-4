@@ -1,19 +1,21 @@
 package com.example.service;
-import com.example.entrity.Student;
 
-import java.sql.SQLException;
+import com.example.entity.Student;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 
 public interface StudentServiceImpl {
-    List<Student> getAllStudent()throws SQLException;
+    List<Student> getAllStudent();
 
-    Student findById(int id)throws SQLException;
+    Student findById(int id);
 
-    boolean addStudent(Student student)throws SQLException;
+    void addStudent(Student student, int idClass, MultipartFile imgFile);
 
-    boolean editStudent(Student student)throws SQLException;
+    void editStudent(Student student);
 
-    boolean deleteStudent(Student student)throws SQLException;
+    void deleteStudent(Student student);
 
-    List<Student> searchByString(String symbol)throws SQLException;
+    List<Student> searchByString(String symbol);
 }

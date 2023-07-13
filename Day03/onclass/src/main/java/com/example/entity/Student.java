@@ -1,28 +1,33 @@
-package com.example.entrity;
+package com.example.entity;
 
+import javax.persistence.*;
+
+@Entity
 public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private int age;
     private String email;
     private String address;
     private String phone;
-    private int id_classroom;
-    private String class_name;
-
+    @ManyToOne
+    private classroom classroom;
+    private String img;
 
     public Student() {
     }
 
-    public Student(int id, String name, int age, String email, String address, String phone, int id_classroom, String class_name) {
+    public Student(int id, String name, int age, String email, String address, String phone, classroom classroom, String img) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.email = email;
         this.address = address;
         this.phone = phone;
-        this.id_classroom = id_classroom;
-        this.class_name = class_name;
+        this.classroom = classroom;
+        this.img = img;
     }
 
     public int getId() {
@@ -73,19 +78,19 @@ public class Student {
         this.phone = phone;
     }
 
-    public int getId_classroom() {
-        return id_classroom;
+    public classroom getclassroom() {
+        return classroom;
     }
 
-    public void setId_classroom(int id_classroom) {
-        this.id_classroom = id_classroom;
+    public void setclassroom(classroom classroom) {
+        this.classroom = classroom;
     }
 
-    public String getClass_name() {
-        return class_name;
+    public String getImg() {
+        return img;
     }
 
-    public void setClass_name(String class_name) {
-        this.class_name = class_name;
+    public void setImg(String img) {
+        this.img = img;
     }
 }
