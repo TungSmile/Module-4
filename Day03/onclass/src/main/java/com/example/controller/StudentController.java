@@ -1,6 +1,4 @@
 package com.example.controller;
-
-import com.example.DAO.StudentDAO;
 import com.example.entity.Student;
 import com.example.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -44,5 +40,11 @@ public class StudentController {
         studentService.addStudent(student,idclass,imgFile);
         return "redirect:/student";
     }
+
+    @GetMapping("/delete") public String deleteStudent(@ModelAttribute Student student){
+        studentService.deleteStudent(student);
+        return "redirect:/student";
+    }
+
 
 }

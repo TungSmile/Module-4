@@ -15,8 +15,8 @@ import java.util.List;
 
 @Service
 public class StudentService implements StudentServiceImpl {
-    @Value("${file-upload}")
-    private String fileUpload;
+    //    @Value("${file-upload}")
+//    private String fileUpload;
     @Autowired
     StudentDAO studentDAO;
     @Autowired
@@ -25,24 +25,22 @@ public class StudentService implements StudentServiceImpl {
     @Override
     public List<Student> getAllStudent() {
         return studentDAO.getAllStudent();
-
     }
 
     @Override
     public Student findById(int id) {
         return studentDAO.findById(id);
-
     }
 
     @Override
     public void addStudent(Student student, int idClass, MultipartFile imgFile) {
         String nameFile = imgFile.getOriginalFilename();
         try {
-            imgFile.transferTo(new File(fileUpload + nameFile));
+            imgFile.transferTo(new File("D:\\Module 4\\Day03\\onclass\\src\\main\\webapp\\image/" + nameFile));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        student.setImg(fileUpload + nameFile);
+        student.setImg("/image/" + nameFile);
         classroom classroom = classRoomDao.findById(idClass);
         student.setclassroom(classroom);
         studentDAO.addStudent(student);
@@ -50,16 +48,16 @@ public class StudentService implements StudentServiceImpl {
 
     @Override
     public void editStudent(Student student) {
-
+        studentDAO.editStudent(student);
     }
 
     @Override
     public void deleteStudent(Student student) {
-
+        studentDAO.delete(student);
     }
 
     @Override
     public List<Student> searchByString(String symbol) {
-        return null;
+        return studentDAO.findByString(symbol);
     }
 }

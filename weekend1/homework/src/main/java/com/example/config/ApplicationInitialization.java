@@ -1,10 +1,12 @@
-package com.example.Config;
+package com.example.config;
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-public class ApplicationInitianlizer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+public class ApplicationInitialization extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{ApplicationConfig.class};
+        return new Class[]{ApplicationConfiguration.class};
     }
 
 
@@ -18,6 +20,4 @@ public class ApplicationInitianlizer extends AbstractAnnotationConfigDispatcherS
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
-
-
 }

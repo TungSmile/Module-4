@@ -6,13 +6,15 @@ import javax.persistence.*;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // có 2 kiểu type indentity và auto , 1 là cho csdl 2 là để thao tác bên java
     private int id;
     private String name;
     private int age;
     private String email;
     private String address;
     private String phone;
-    @ManyToOne
+    @ManyToOne(targetEntity =classroom.class,cascade = {CascadeType.PERSIST})
+    // cascade là thuộc tính dùng để xác định quyền đc thao tác với entity đó khi có mối quan hệ
     private classroom classroom;
     private String img;
 

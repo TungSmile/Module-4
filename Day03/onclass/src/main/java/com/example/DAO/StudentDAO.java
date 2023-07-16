@@ -1,16 +1,15 @@
 package com.example.DAO;
-
 import com.example.entity.Student;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
-
+@Transactional
 @Component
 public class StudentDAO {
-    @Autowired
+    @PersistenceContext
     EntityManager entityManager;
 
 
@@ -27,23 +26,20 @@ public class StudentDAO {
     }
 
     public void addStudent(Student student) {
-        EntityTransaction txn = entityManager.getTransaction();
-        txn.begin();
         entityManager.persist(student);
-        txn.commit();
     }
 
     public void editStudent(Student student) {
-        EntityTransaction txn = entityManager.getTransaction();
-        txn.begin();
         entityManager.merge(student);
-        txn.commit();
     }
 
     public void delete(Student student){
-        EntityTransaction txn = entityManager.getTransaction();
-        txn.begin();
         entityManager.remove(student);
-        txn.commit();
     }
+    public List<Student> findByString( String name ){
+        String sql= "SELECT s FROM Student s where s.name = :name";
+        TypedQuery<Student> query=entityManager.createQuery(sql, Student.class).setParameter("name", name);
+        return (List<Student>) query.getResultList();
+    }
+
 }

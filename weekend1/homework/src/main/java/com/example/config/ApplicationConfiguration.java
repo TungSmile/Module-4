@@ -1,9 +1,6 @@
-package com.example.Config;
+package com.example.config;
 
-import com.example.DAO.ClassRoomDao;
-import com.example.DAO.StudentDAO;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -31,18 +28,13 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.example")
-public class ApplicationConfig implements WebMvcConfigurer, ApplicationContextAware {
-    @Value("${file-upload}")
-    private String fileUpload;
-    // link chỉ data tĩnh nhưng ko biz dùng
+public class ApplicationConfiguration implements WebMvcConfigurer, ApplicationContextAware {
     private ApplicationContext applicationContext;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
-
-    // bean themyleaf
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
@@ -53,7 +45,6 @@ public class ApplicationConfig implements WebMvcConfigurer, ApplicationContextAw
         templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
     }
-
     @Bean
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
@@ -68,8 +59,6 @@ public class ApplicationConfig implements WebMvcConfigurer, ApplicationContextAw
         viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
-
-    // bean mutipart
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
@@ -77,13 +66,11 @@ public class ApplicationConfig implements WebMvcConfigurer, ApplicationContextAw
         resolver.setMaxInMemorySize(4096);
         return resolver;
     }
-
-// bean local dữ liệu tĩnh
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("file:D:\\Module 4\\Day03\\onclass\\src\\main\\webapp/");
+        registry.addResourceHandler("/**")
+                .addResourceLocations("file:D:\\Module 4\\weekend1\\homework\\src\\main\\webapp\\img" );
     }
-    //    Cấu hình để kết nối cơ sở dữ liệu
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -93,8 +80,13 @@ public class ApplicationConfig implements WebMvcConfigurer, ApplicationContextAw
         dataSource.setPassword("123456");
         return dataSource;
     }
-
-    // cấu hình thằng chứa entity
+    @Bean
+    Properties additionalProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
+        return properties;
+    }
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -105,38 +97,15 @@ public class ApplicationConfig implements WebMvcConfigurer, ApplicationContextAw
         em.setJpaProperties(additionalProperties());
         return em;
     }
-
-    // cấu hình để cho hibernate tự động tạo bảng cho mình.
-    @Bean
-    Properties additionalProperties() {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
-        // MySQL5Dialect : tao bảng ko ràng buộc , MySQL5InnoDBDialect : tạo bảng có ràng buộc
-        // set property là cú pháp , thay đổi th tự search
-        return properties;
-    }
-    // config quản lý entity để thao tác csdl
     @Bean
     public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
         return entityManagerFactory.createEntityManager();
     }
-// config transaction
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
         return transactionManager;
     }
-
-//    @Bean
-//    StudentDAO studentDAO(){
-//        return new StudentDAO();
-//    }
-//    @Bean
-//    ClassRoomDao classRoomDao(){
-//        return new ClassRoomDao();
-//    }
-
 
 }
