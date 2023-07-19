@@ -9,6 +9,7 @@ public class Invoice {
 
     private int id;
     private Date day_create;
+    // chưa có xử lý converter hoặc formatter
     @ManyToOne
     private User client;
     private double amount;

@@ -4,17 +4,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
+
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Size(min = 6, message = "nhiều hơn 6 ký tự")
     private String username;
+    @Size(min = 6, message = "nhiều hơn 6 ký tự")
     private String password;
-     private String name;
-     private int age;
-     private String img;
-     private String email;
+    private String name;
+    private int age;
+    private String img;
+    private String email;
 
     public User(int id, String username, String password, String name, int age, String img, String email) {
         this.id = id;

@@ -1,10 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/Layout.html :: head">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<div class="container">
+    <h2>Table List Product</h2>
+    <a>Cart</a>
+    <a th:text="${name_client}"></a>
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Inventory</th>
+            <th>Price</th>
+            <th>Describe</th>
+            <th>Quantity Sold</th>
+            <th>Action</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item,itemStat : ${list}">
+            <td th:text="${row.id}"></td>
+            <td th:text="${row.name}"></td>
+            <td th:text="${row.inventory}"></td>
+            <td th:text="${row.price}"></td>
+            <td th:text="${row.describeProduct}"></td>
+            <td th:text="${row.quantity_sold}"></td>
+            <td><a th:href="@{/product/cart/{id}(id=${row.id})}">
+                <button>AddToCart</button>
+            </a></td>
+            <td><a  th:href="@{/cart/{id}(id=${row.id})}">
+                <button>MoreDetail</button>
+            </a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

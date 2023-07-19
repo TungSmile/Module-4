@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Cart {
@@ -9,10 +10,12 @@ public class Cart {
     private  int id;
     @ManyToOne
     private User client;
-    @ManyToOne
-    private Product product;
+    @ManyToMany
+    private List<Product> product;
+    //đã chỉnh lại vì là manyToMany
 
-    public Cart(int id, User client, Product product) {
+
+    public Cart(int id, User client, List<Product> product) {
         this.id = id;
         this.client = client;
         this.product = product;
@@ -37,11 +40,5 @@ public class Cart {
         this.client = client;
     }
 
-    public Product getProduct() {
-        return product;
-    }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 }

@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/Layout.html :: head">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<table>
+    <tr>
+        <th colspan="6"> Bảng chi tiết </th>
+    </tr>
+    <tr>
+    <td th:text="${row.id}"></td>
+    <td th:text="${row.name}"></td>
+    <td th:text="${row.inventory}"></td>
+    <td th:text="${row.price}"></td>
+    <td th:text="${row.describeProduct}"></td>
+    <td th:text="${row.quantity_sold}"></td>
+    </tr>
+</table>
 </body>
 </html>
