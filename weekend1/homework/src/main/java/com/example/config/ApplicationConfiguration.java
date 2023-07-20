@@ -43,7 +43,7 @@ public class ApplicationConfiguration implements WebMvcConfigurer, ApplicationCo
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setPrefix("/views");
+        templateResolver.setPrefix("/views/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCharacterEncoding("UTF-8");
@@ -87,6 +87,7 @@ public class ApplicationConfiguration implements WebMvcConfigurer, ApplicationCo
     @Bean
     Properties additionalProperties() {
         Properties properties = new Properties();
+        properties.setProperty("hibernate.event.merge.entity_copy_observer","allow");
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
         return properties;

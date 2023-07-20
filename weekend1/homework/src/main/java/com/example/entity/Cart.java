@@ -1,5 +1,4 @@
 package com.example.entity;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,13 +9,17 @@ public class Cart {
     private  int id;
     @ManyToOne
     private User client;
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     private List<Product> product;
-    //đã chỉnh lại vì là manyToMany
 
 
     public Cart(int id, User client, List<Product> product) {
         this.id = id;
+        this.client = client;
+        this.product = product;
+    }
+
+    public Cart(User client, List<Product> product) {
         this.client = client;
         this.product = product;
     }
@@ -38,6 +41,14 @@ public class Cart {
 
     public void setClient(User client) {
         this.client = client;
+    }
+
+    public List<Product> getProduct() {
+        return product;
+    }
+
+    public void setProduct(List<Product> product) {
+        this.product = product;
     }
 
 

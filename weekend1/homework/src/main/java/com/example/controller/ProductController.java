@@ -27,22 +27,23 @@ public class ProductController {
     private HttpSession session;
 
     @GetMapping()
-    public String homePage(Model model ,@RequestParam(defaultValue = "0") int page) {
-        model.addAttribute("name_client", (String) session.getAttribute("name_user"));
-        Page<Product> list=productService.getAllProduct(PageRequest.of(page,5));
+    public String homePage(Model model, @RequestParam(defaultValue = "0") int page) {
+        model.addAttribute("name_client", session.getAttribute("name_user"));
+        Page<Product> list = productService.getAllProduct(PageRequest.of(page, 5));
+        model.addAttribute("list", list);
         return "home_product";
     }
 
     @GetMapping("/{id}")
-    public String showDetail(@PathVariable int  id, Model model) {
+    public String showDetail(@PathVariable int id, Model model) {
         model.addAttribute("product", productService.finByID(id));
         return "detail_product";
     }
-@GetMapping("/addcart/{id}")
-    public String addProductToCart(){
 
-
+    @GetMapping("/addcart")
+    public String addProductToCart(@RequestParam int id) {
+        iCartService.addProductToCart((Integer) session.getAttribute("id_user"), id);
         return "redirect:/product";
-}
+    }
 
 }

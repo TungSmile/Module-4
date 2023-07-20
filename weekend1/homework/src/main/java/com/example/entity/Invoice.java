@@ -2,23 +2,26 @@ package com.example.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
+
 @Entity
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int id;
     private Date day_create;
-    // chưa có xử lý converter hoặc formatter
     @ManyToOne
     private User client;
     private double amount;
+    @ManyToMany(fetch=FetchType.EAGER)
+    private List<Product> productList;
 
-    public Invoice(int id, Date day_create, User client, double amount) {
+    public Invoice(int id, Date day_create, User client, double amount,List<Product> productList) {
         this.id = id;
         this.day_create = day_create;
         this.client = client;
         this.amount = amount;
+        this.productList=productList;
     }
 
     public Invoice() {
@@ -54,5 +57,12 @@ public class Invoice {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 }

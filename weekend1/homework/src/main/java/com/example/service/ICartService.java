@@ -7,12 +7,13 @@ import com.example.entity.User;
 import java.util.List;
 
 public interface ICartService {
-    List<Product> getAllProductInCart(User e);
+    public List<Product> getAllProductInCart(User e);
     void save(Cart e);
     void delete(Cart e);
     Cart finByID(int id);
     Cart findByIDUser(int id);
-    void addProductToCart(int idCart ,int idProduct);
-    List<Product> findProductsById(int id);
-    List<Product> getAllProductByIDCart(int id);
+    void addProductToCart(int idUser ,int idProduct);
+    void removeProductOnCart(int idUser ,int idProduct);
+//    public List<Product> findProductsByIdUser(int id);
+//    public List<Product> getAllProductByIDCart(int id);
 }

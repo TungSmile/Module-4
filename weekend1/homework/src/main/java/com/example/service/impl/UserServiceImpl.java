@@ -49,8 +49,9 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void addNewUser(User e, MultipartFile file) throws IOException {
         String nameFile = file.getOriginalFilename();
-        file.transferTo(new File("D:\\Module 4\\weekend1\\homework\\src\\main\\webapp\\img"+nameFile));
+        file.transferTo(new File("D:\\Module 4\\weekend1\\homework\\src\\main\\webapp\\img\\"+nameFile));
         e.setImg("/img/"+nameFile);
+        e.setRole("client");
         userRepo.save(e);
     }
 
