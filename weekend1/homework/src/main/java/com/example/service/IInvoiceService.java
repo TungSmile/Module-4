@@ -11,4 +11,5 @@ public interface IInvoiceService {
     void save(Invoice e);
     void delete(Invoice e);
     Invoice finByID(int id);
+
 }

@@ -23,9 +23,9 @@ public class Invoice {
         this.amount = amount;
         this.productList=productList;
     }
-
     public Invoice() {
     }
+
 
     public int getId() {
         return id;

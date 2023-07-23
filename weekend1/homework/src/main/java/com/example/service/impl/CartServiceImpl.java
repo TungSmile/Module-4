@@ -1,15 +1,18 @@
 package com.example.service.impl;
 
 import com.example.entity.Cart;
+import com.example.entity.Invoice;
 import com.example.entity.Product;
 import com.example.entity.User;
 import com.example.repository.ICartRepoitory;
+import com.example.repository.IIvoiceRpository;
 import com.example.repository.IProductRepository;
 import com.example.repository.IUserRepository;
 import com.example.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +24,20 @@ public class CartServiceImpl implements ICartService {
     IUserRepository iUserRepository;
     @Autowired
     IProductRepository iProductRepository;
+    @Autowired
+    IIvoiceRpository iIvoiceRpository;
 
     @Override
     public List<Product> getAllProductInCart(User e) {
-        return iCartRepoitory.findProductsByClientContains(e);
+        Cart cart =iCartRepoitory.findCartByClient_Id(e.getId());
+        if(cart==null){
+            List<Product> list=new ArrayList<>();
+            cart=new Cart();
+            cart.setClient(e);
+            cart.setProduct(list);
+            iCartRepoitory.save(cart);
+        }
+        return cart.getProduct();
     }
 
     @Override
@@ -46,7 +59,6 @@ public class CartServiceImpl implements ICartService {
     public Cart findByIDUser(int id) {
         return iCartRepoitory.findCartByClient_Id(id);
     }
-
     @Override
     public void addProductToCart(int idUser, int idProduct) {
         Cart cart = findByIDUser(idUser);
@@ -78,6 +90,18 @@ public class CartServiceImpl implements ICartService {
         cart.setProduct(list);
         save(cart);
     }
+
+    @Override
+    public void changeCartToInvoice(int idUser) {
+        Cart cart =findByIDUser(idUser);
+        Invoice temp=new Invoice();
+        temp.setClient(iUserRepository.findById(idUser).get());
+        temp.setDay_create(new Date(System.currentTimeMillis()));
+        temp.setProductList(cart.getProduct());
+        iIvoiceRpository.save(temp);
+        iCartRepoitory.delete(cart);
+    }
+
 
 //    @Override
 //    public List<Product> findProductsByIdUser(int id) {

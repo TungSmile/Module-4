@@ -14,6 +14,8 @@ public interface ICartService {
     Cart findByIDUser(int id);
     void addProductToCart(int idUser ,int idProduct);
     void removeProductOnCart(int idUser ,int idProduct);
+    void changeCartToInvoice(int idUser);
+
 //    public List<Product> findProductsByIdUser(int id);
 //    public List<Product> getAllProductByIDCart(int id);
 }

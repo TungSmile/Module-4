@@ -25,7 +25,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="item : ${list}">
+        <tr th:each="item,itemStat : ${list}">
             <td th:text="${item.getId()}"></td>
             <td th:text="${item.getName()}"></td>
             <td th:text="${item.getInventory()}"></td>

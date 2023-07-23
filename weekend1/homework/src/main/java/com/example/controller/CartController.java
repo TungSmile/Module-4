@@ -6,7 +6,6 @@ import com.example.entity.User;
 import com.example.service.ICartService;
 import com.example.service.IInvoiceService;
 import com.example.service.IProductService;
-import com.example.service.impl.InvoiceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+
 import java.util.List;
 
 @Controller
@@ -31,30 +31,30 @@ public class CartController {
     IInvoiceService iInvoiceService;
 
     @GetMapping()
-    public ModelAndView showCart() {
-        int id_user = (int) session.getAttribute("id_user");
-        Cart cart= iCartService.findByIDUser(id_user);
-        List<Product> productList = cart.getProduct();
-        ModelAndView modelAndView = new ModelAndView("cart_product");
-        modelAndView.addObject("list",productList);
-        return modelAndView;
+    public String showCart(Model model) {
+        List<Product> list = iCartService.getAllProductInCart((User) session.getAttribute("user"));
+        model.addAttribute("list",list);
+        return "cart_product";
     }
 
     @GetMapping("/{id}")
     public String addProductToCart(@PathVariable int id) {
-        int id_user= (int) session.getAttribute("id_user");
-        iCartService.addProductToCart(id_user,id);
+        int id_user = (int) session.getAttribute("id_user");
+        iCartService.addProductToCart(id_user, id);
         return "redirect:/product";
     }
 
-    @GetMapping("/remove/{id}")public String removeProductOnCart(@PathVariable int id){
-        int id_user= (int) session.getAttribute("id_user");
-        iCartService.removeProductOnCart(id_user,id);
+    @GetMapping("/remove/{id}")
+    public String removeProductOnCart(@PathVariable int id) {
+        int id_user = (int) session.getAttribute("id_user");
+        iCartService.removeProductOnCart(id_user, id);
         return "redirect:/cart";
     }
-    @GetMapping("/buy")
-    public String changeCartToInVoice(){
 
+    @GetMapping("/buy")
+    public String changeCartToInVoice() {
+        int id_user = (int) session.getAttribute("id_user");
+        iCartService.changeCartToInvoice(id_user);
         return "redirect:/product";
     }
 }

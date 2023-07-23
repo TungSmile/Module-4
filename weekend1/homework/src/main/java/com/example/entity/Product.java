@@ -1,9 +1,8 @@
 package com.example.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
+
 @Entity
 public class Product {
     @Id
@@ -14,15 +13,9 @@ public class Product {
     private double price;
     private String describeProduct;
     private int quantity_sold;
-
-    public Product(int id, String name, int inventory, double price, String describe, int quantity_sold) {
-        this.id = id;
-        this.name = name;
-        this.inventory = inventory;
-        this.price = price;
-        this.describeProduct = describe;
-        this.quantity_sold = quantity_sold;
-    }
+    private String img;
+    @ManyToOne
+    private Comment comment;
 
     public Product() {
     }
@@ -73,5 +66,21 @@ public class Product {
 
     public void setQuantity_sold(int quantity_sold) {
         this.quantity_sold = quantity_sold;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public Comment getComment() {
+        return comment;
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
     }
 }
