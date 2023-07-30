@@ -10,18 +10,22 @@ public class Comment {
     private int id;
     private Date date_create;
     private String commentOfClient;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
     @ManyToOne
     private Product product;
+
     public Comment() {
     }
+
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public Date getDate_create() {
         return date_create;
     }
@@ -29,7 +33,6 @@ public class Comment {
     public void setDate_create(Date date_create) {
         this.date_create = date_create;
     }
-
 
     public User getUser() {
         return user;

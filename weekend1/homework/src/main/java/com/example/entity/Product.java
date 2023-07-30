@@ -14,8 +14,6 @@ public class Product {
     private String describeProduct;
     private int quantity_sold;
     private String img;
-    @ManyToOne
-    private Comment comment;
 
     public Product() {
     }
@@ -76,11 +74,5 @@ public class Product {
         this.img = img;
     }
 
-    public Comment getComment() {
-        return comment;
-    }
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
-    }
 }

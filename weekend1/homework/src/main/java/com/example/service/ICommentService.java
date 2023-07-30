@@ -9,4 +9,6 @@ public interface ICommentService {
     void save(Comment e);
     void delete(Comment e);
     Comment finByID(int id);
+    List<Comment> getAllProductFromProduct(int idProduct);
+    void addNewComment(int idUser, int idProduct,String comment);
 }
